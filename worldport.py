@@ -587,8 +587,7 @@ def potoc (name):
         sock.settimeout(1)
         result = sock.connect_ex((target,int(port)))
         if(result == 0):
-            print("_"*(len(target)+len(port)))
-            print("!["+target+":"+str(port)+"]")
+            print(""+target+":"+str(port)+"")
             save_file = open(port+".log", "a+")
             save_file.write(""+target+":"+str(port)+"\n")
             save_file.close()
