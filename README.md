@@ -12,3 +12,6 @@ Utility for finding servers around the world on the specified ports
  _started_
  
  Result saved by port in file [port].log
+ 
+ Created by <a href='https://t.me/termuxlab'>Termux-Lab</a>
+ 
