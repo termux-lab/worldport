@@ -588,7 +588,7 @@ def potoc (name):
         sock.settimeout(1)
         result = sock.connect_ex((target,int(port)))
         if(result == 0):
-            print("_"*(len(target)+len(port)+2))
+            print()
             print(""+target+":"+str(port)+"")
             if str(port)=='21':
                 try:
