@@ -1,5 +1,6 @@
 import socket
 import random, threading
+from ftplib import FTP
 print("""
   ___   _      ___   _      ___   _      ___   _      ___   _
  [(_)] |=|    [(_)] |=|    [(_)] |=|    [(_)] |=|    [(_)] |=|
@@ -587,10 +588,21 @@ def potoc (name):
         sock.settimeout(1)
         result = sock.connect_ex((target,int(port)))
         if(result == 0):
+            print("_"*(len(target)+len(port)+2))
             print(""+target+":"+str(port)+"")
-            save_file = open(port+".log", "a+")
-            save_file.write(""+target+":"+str(port)+"\n")
-            save_file.close()
+            if str(port)=='21':
+                try:
+                    ftp = FTP()
+                    ftpx = ftp.connect(target, int(port))
+                    save_file = open(port+".log", "a+")
+                    save_file.write(""+target+":"+str(port)+"\n"+ftpx+"\n\n\n")
+                    save_file.close()
+                    print(ftpx)
+                except:
+                    save_file = open(port+".log", "a+")
+                    save_file.write(""+target+":"+str(port)+"\n\n\n")
+                    save_file.close()
+
         sock.close()
 for i in range(int(th)):
     x = threading.Thread(target=potoc, args=(i,))
