@@ -1,5 +1,6 @@
 import socket
 import random, threading
+import telnetlib
 from ftplib import FTP
 print("""
   ___   _      ___   _      ___   _      ___   _      ___   _
@@ -588,8 +589,6 @@ def potoc (name):
         sock.settimeout(1)
         result = sock.connect_ex((target,int(port)))
         if(result == 0):
-            print()
-            print(""+target+":"+str(port)+"")
             if str(port)=='21':
                 try:
                     ftp = FTP()
@@ -597,12 +596,24 @@ def potoc (name):
                     save_file = open(port+".log", "a+")
                     save_file.write(""+target+":"+str(port)+"\n"+ftpx+"\n\n\n")
                     save_file.close()
-                    print(ftpx)
+                    print(""+target+":"+str(port)+"\n"+ftpx+"\n")
                 except:
+                    pass
+            if str(port)=='23':
+                try:
+                    tn = telnetlib.Telnet(target, 23, 6)
+                    telnx = ""+target+":"+str(port)+"\n"+tn.read_all().decode('ascii')+"\n"
+                    print(telnx)
                     save_file = open(port+".log", "a+")
-                    save_file.write(""+target+":"+str(port)+"\n\n\n")
+                    save_file.write(""+target+":"+str(port)+"\n"+telnx+"\n\n\n")
                     save_file.close()
-
+                except:
+                    pass
+            else:
+                print(target+":"+str(port)+"")
+                save_file = open(port+".log", "a+")
+                save_file.write(""+target+":"+str(port)+"\n\n\n")
+                save_file.close()
         sock.close()
 for i in range(int(th)):
     x = threading.Thread(target=potoc, args=(i,))
